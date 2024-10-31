@@ -4,4 +4,7 @@
 ## Variables relatives au joueur
 class player_variables:
     max_health =  100,
-    min_health = 0
+    min_health = 0,
+    width = 10
+    height = 20,
+    delta_speed = 2
