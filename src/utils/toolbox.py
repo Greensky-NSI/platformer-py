@@ -34,7 +34,12 @@ def parse_position(position: int, dimension: Literal["width", "height"] = "width
     :param dimension: Literal["width", "height"] - La dimension à laquelle la position doit être encadrée.
     :return: int
     """
-    return max(min(position, env["width" if dimension == "width" else "height"]), 0)
+
+    dimens = env.width
+    if dimension == "height":
+        dimens = env.height
+
+    return max(min(position, dimens), 0)
 def safe_fill(couleur: tuple[int, int, int]):
     """
     Remplit la forme suivante avec la couleur donnée, et sauvegarde la couleur actuelle.
