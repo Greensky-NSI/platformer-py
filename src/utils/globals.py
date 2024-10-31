@@ -8,3 +8,8 @@ class player_variables:
     width = 10
     height = 20,
     delta_speed = 2
+
+## Variables relatives à l'environnement
+class env:
+    width = 600
+    height = 800
