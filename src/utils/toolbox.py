@@ -1,6 +1,6 @@
 from typing import Literal
-
 from src.utils.globals import env
+from p5 import fill, stroke
 
 def parse_integer(number: any, default = 0) -> int:
     """
@@ -35,3 +35,21 @@ def parse_position(position: int, dimension: Literal["width", "height"] = "width
     :return: int
     """
     return max(min(position, env["width" if dimension == "width" else "height"]), 0)
+def safe_fill(couleur: tuple[int, int, int]):
+    """
+    Remplit la forme suivante avec la couleur donnée, et sauvegarde la couleur actuelle.
+
+    :param couleur: tuple[int, int, int] - La couleur à utiliser.
+    """
+    r, g, b = couleur
+
+    fill(r, g, b)
+def safe_stroke(couleur: tuple[int, int, int]):
+    """
+    Définit la couleur du contour suivant avec la couleur donnée, et sauvegarde la couleur actuelle.
+
+    :param couleur: tuple[int, int, int] - La couleur à utiliser.
+    """
+    r, g, b = couleur
+
+    stroke(r, g, b)
