@@ -19,7 +19,7 @@ class player_variables:
     min_health = 0
     width = 10
     height = 20
-    delta_speed = 2
+    delta_speed = 5
 
     deplacements_keymap = movements
 
@@ -28,3 +28,5 @@ class env:
     width = 600
     height = 800
     wall_width = 20
+    wall_border_stroke = 2
+    wall_total_width = wall_width + wall_border_stroke

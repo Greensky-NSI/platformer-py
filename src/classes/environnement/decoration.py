@@ -7,7 +7,7 @@ def decoration():
     background(couleurs.background_fill_color)
 
     bg_color = couleurs.decoration_wall_color
-    stroke_weight = 2
+    stroke_weight = env.wall_border_stroke
     stroke_color = couleurs.decoration_border_color
 
     no_stroke()
