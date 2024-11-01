@@ -27,4 +27,4 @@ class player_variables:
 class env:
     width = 600
     height = 800
-    wall_width = 200
+    wall_width = 20
