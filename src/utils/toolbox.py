@@ -58,3 +58,18 @@ def safe_stroke(couleur: tuple[int, int, int]):
     r, g, b = couleur
 
     stroke(r, g, b)
+
+def parse_position_in_walls(position: int, dimension: Literal["width", "height"] = "width") -> int:
+    """
+    Renvoie la position sous forme d'entier positif, encadrée par les dimensions du jeu, en prenant en compte les murs.
+
+    :param position: int - La position à convertir.
+    :param dimension: Literal["width", "height"] - La dimension à laquelle la position doit être encadrée.
+    :return: int
+    """
+
+    dimens = env.width - 2 * env.wall_width
+    if dimension == "height":
+        dimens = env.height - 2 * env.wall_width
+
+    return max(min(position, dimens), 0) + env.wall_width
