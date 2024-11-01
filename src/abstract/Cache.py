@@ -40,3 +40,11 @@ class Cache:
         :return: any - La valeur correspondante à la clé dans le cache, ou la valeur par défaut si la clé n'existe pas.
         """
         return self._cache.get(key, default)  # Renvoie la valeur correspondante à la clé dans le cache, ou la valeur par défaut si la clé n'existe pas.
+
+    def __repr__(self):
+        resp = "Cache: {"
+
+        for key, value in self._cache.items():
+            resp += f"\n\t{key}: {value}"
+        resp += "\n}"
+        return resp
