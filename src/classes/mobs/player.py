@@ -1,4 +1,4 @@
-from src.utils.toolbox import parse_integer, parse_position, safe_stroke, safe_fill
+from src.utils.toolbox import parse_integer, parse_position, safe_stroke, safe_fill, parse_position_in_walls
 from src.utils.globals import player_variables
 from src.types.movement import Direction
 from p5 import rect, strokeWeight
@@ -14,7 +14,7 @@ class Player:
         self._height = player_variables.height
 
     def move(self, direction: Direction):
-        self._x = parse_position(self._x + self._ds * (1 if direction == "right" else -1), "width")
+        self._x = parse_position_in_walls(parse_position(self._x + self._ds * (1 if direction == "right" else -1), "width"), "width")
 
     def display(self):
         safe_fill((210, 105, 30))
