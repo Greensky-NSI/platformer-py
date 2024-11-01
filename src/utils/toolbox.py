@@ -68,8 +68,12 @@ def parse_position_in_walls(position: int, dimension: Literal["width", "height"]
     :return: int
     """
 
-    dimens = env.width - 2 * env.wall_width
-    if dimension == "height":
-        dimens = env.height - 2 * env.wall_width
+    left_limit = env.wall_total_width
+    right_limit = env.width - env.wall_total_width
 
-    return max(min(position, dimens), 0) + env.wall_width
+    if dimension == "height":
+        left_limit = env.wall_width
+        right_limit = env.height - env.wall_total_width
+
+
+    return max(min(position, right_limit), left_limit)
