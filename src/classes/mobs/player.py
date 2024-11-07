@@ -1,7 +1,9 @@
-from src.utils.toolbox import parse_integer, parse_position, safe_stroke, safe_fill
+from src.utils.toolbox import parse_integer, parse_position
 from src.utils.globals import player_variables
 from src.types.movement import Direction
-from p5 import rect, strokeWeight
+from p5 import translate, scale
+
+from src.Designs.playerDesign import draw_face
 
 class Player:
     def __init__(self, name, health):
@@ -17,7 +19,8 @@ class Player:
         self._x = parse_position(self._x + self._ds * (1 if direction == "right" else -1), "width")
 
     def display(self):
-        safe_fill((210, 105, 30))
-        safe_stroke((0, 0, 0))
-        strokeWeight(1)
-        rect(self._x, self._y, self._width, self._height)
+        translate(self._x, self._y)
+
+        draw_face(1.2)
+
+        translate(-self._x, -self._y)

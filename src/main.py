@@ -14,7 +14,7 @@ player = Player("Greensky", 100)
 def draw():
     decoration()
 
-    # player.display()
+    player.display()
     if key_is_pressed:
         pressed = str(key).lower()
 
