@@ -8,9 +8,6 @@ left_arm_color = Color(255, 0, 0)
 right_arm_color = Color(0, 255, 0)# Couleur principale
 body_color = Color(0, 128, 128)     # Couleur du corps
 detail_color = Color(255, 215, 0)   # Couleur des détails (ex. ceinture)
-
-def setup():
-    size(640, 640)
     
 def draw_head(i=1):
     fill(head_color)
@@ -49,8 +46,3 @@ def draw_face(i=2):
     draw_left_leg(i)
     draw_right_leg(i)
     draw_belt(i)
-
-def draw():
-    draw_face()
-    
-run()
