@@ -1,7 +1,7 @@
 from src.utils.toolbox import parse_integer, parse_position, safe_stroke, safe_fill
 from src.utils.globals import player_variables
 from src.types.movement import Direction
-from p5 import rect, strokeWeight
+from p5 import rect, translate
 
 class Player:
     def __init__(self, name, health):
@@ -17,7 +17,26 @@ class Player:
         self._x = parse_position(self._x + self._ds * (1 if direction == "right" else -1), "width")
 
     def display(self):
-        safe_fill((210, 105, 30))
-        safe_stroke((0, 0, 0))
-        strokeWeight(1)
-        rect(self._x, self._y, self._width, self._height)
+        translate(self._x, self._y)
+        # Tête
+        safe_fill(player_variables.player_colors["hero_color"])
+        rect((24, 8), 16, 16)
+
+        # Corps
+        safe_fill(player_variables.player_colors["body_color"])
+        rect(22, 24, 20, 24)
+
+        # Bras
+        rect(14, 26, 8, 18)  # bras gauche
+        rect(42, 26, 8, 18)  # bras droit
+
+        # Jambes
+        safe_fill(player_variables.player_colors["hero_color"])
+        rect(24, 48, 8, 12)  # jambe gauche
+        rect(32, 48, 8, 12)  # jambe droite
+
+        # Détails : ceinture
+        safe_fill(player_variables.player_colors["detail_color"])
+        rect(28, 40, 8, 4)
+
+        translate(-self._x, -self._y)

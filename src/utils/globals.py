@@ -16,6 +16,12 @@ class player_variables:
 
     deplacements_keymap = movements
 
+    player_colors = {
+        "hero_color": (30, 144, 255),  # Couleur principale
+        "body_color": (0, 128, 128),  # Couleur du corps
+        "detail_color": (255, 215, 0)
+    }
+
 ## Variables relatives à l'environnement
 class env:
     width = 600
