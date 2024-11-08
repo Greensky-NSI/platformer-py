@@ -1,4 +1,5 @@
 from src.classes.mobs.player import Player
+from src.classes.statics.Cadeau import Cadeau
 from src.classes.typeClasses.DOM import EntitiesType
 from typing import List
 from src.utils.globals import env
@@ -8,12 +9,14 @@ class DOM:
     entities: EntitiesType = EntitiesType()
     ticker: Ticker
 
-    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = ()):
+    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = ()):
         # Assertions
         assert all([x is not None and isinstance(x, Player) for x in players]), "La liste des joueurs du DOM contient des éléments qui ne sont pas des joueurs"
+        assert all([x is not None and isinstance(x, Cadeau) for x in gifts]), "La liste des cadeaux du DOM contient des éléments qui ne sont pas des cadeaux"
 
         # Assignations
         self.entities.players = list(players)
+        self.entities.gifts = list(gifts)
         self.ticker = ticker
 
     def apply_players_gravity(self):
@@ -48,6 +51,12 @@ class DOM:
         if not player in self.entities.players:
             self.entities.players.append(player)
 
+    def display(self):
+        for player in self.entities.players:
+            player.display()
+
+        for cadeau in self.entities.gifts:
+            cadeau.display()
 
     @property
     def dom_ticker(self):

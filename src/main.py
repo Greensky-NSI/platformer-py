@@ -19,9 +19,9 @@ def draw():
     game_ticker.tick()
     decoration()
 
+    game_DOM.display()
     game_DOM.tick()
 
-    player.display()
     if key_is_pressed:
         pressed = str(key).lower()
 
