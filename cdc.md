@@ -17,6 +17,7 @@ Le projet doit être codé en [Python 3.10](https://www.python.org/downloads/rel
 | [Liste des cadeaux](#cadeaux) | Implémentation par une pile ou une file | ❌ |
 | [Monstre](#monstres) | Implémentation par une classe | ❌ |
 | [Organisation en modules](#organisation) | Différents dossiers et fichiers dans le projet | 🚧 |
+| [Charte Graphique](./charte%20graphique.md) | Charte graphique du projet | 🚧 |
 
 ### Signification des signes
 

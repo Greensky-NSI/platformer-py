@@ -1,12 +1,14 @@
 from src.utils.toolbox import parse_integer, parse_position, safe_stroke, safe_fill, parse_position_in_walls
 from src.utils.globals import player_variables, env
 from src.types.movement import Direction
-from p5 import rect, strokeWeight
 from src.abstract.Cache import Cache
 from src.types.enums import PlayerCache
 from math import sin
 from uuid import uuid4
 from src.abstract.Ticker import Ticker
+from p5 import translate, scale
+
+from src.Designs.playerDesign import draw_face
 
 class Player:
     def __init__(self, name, health):
@@ -69,10 +71,9 @@ class Player:
             self._cache.cache(PlayerCache.JUMP_LAST_OUTPUT, coeff)
 
     def display(self):
-        safe_fill((210, 105, 30))
-        safe_stroke((0, 0, 0))
-        strokeWeight(1)
-        rect(self._x, self._y, self._width, -self._height)
+        translate(self._x, self._y)
+        draw_face(1.2)
+        translate(-self._x, -self._y)
 
     @property
     def jumping(self):
@@ -106,3 +107,4 @@ class Player:
         if not isinstance(other, Player):
             return False
         return other.id == self.id
+
