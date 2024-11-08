@@ -1,31 +1,30 @@
 # Fichier qui décore le cadre du jeu
 from src.utils.toolbox import safe_fill
-from src.utils.globals import env
+from src.utils.globals import env, couleurs
 from p5 import rect, background, no_stroke
 
 def decoration():
-    background(200)
+    background(couleurs.background_fill_color)
 
-    bg_color = (0, 12, 20)
-    bg_width = 20
-    stroke_weight = 2
-    stroke_color = (128, 128, 128)
+    bg_color = couleurs.decoration_wall_color
+    stroke_weight = env.wall_border_stroke
+    stroke_color = couleurs.decoration_border_color
 
     no_stroke()
 
     # Rectangles simulant les bords
     safe_fill(stroke_color)
 
-    rect(0, 0, bg_width + stroke_weight, env.height)
-    rect(0, 0, env.width, bg_width + stroke_weight)
-    rect(env.width - bg_width - stroke_weight, 0, bg_width, env.height)
-    rect(0, env.height - bg_width - stroke_weight, env.width, bg_width)
+    rect(0, 0, env.wall_width + stroke_weight, env.height)
+    rect(0, 0, env.width, env.wall_width + stroke_weight)
+    rect(env.width - env.wall_width - stroke_weight, 0, env.wall_width, env.height)
+    rect(0, env.height - env.wall_width - stroke_weight, env.width, env.wall_width)
 
     # Rectangles noirs
     safe_fill(bg_color)
 
-    rect(0, 0, bg_width, env.height)
-    rect(0, 0, env.width, bg_width)
-    rect(env.width - bg_width, 0, bg_width, env.height)
-    rect(0, env.height - bg_width, env.width, bg_width)
+    rect(0, 0, env.wall_width, env.height)
+    rect(0, 0, env.width, env.wall_width)
+    rect(env.width - env.wall_width, 0, env.wall_width, env.height)
+    rect(0, env.height - env.wall_width, env.width, env.wall_width)
 
