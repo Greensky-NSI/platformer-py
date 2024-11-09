@@ -1,33 +1,39 @@
-class Pile:
-    _items = []
+from typing import Generic, TypeVar
+from typing_extensions import Self
 
-    def __init__(self, item_set: list = []):
+T = TypeVar("T")
+
+class Pile(Generic[T]):
+    _items: list[T] = []
+
+    def __init__(self, item_set: list[T] = ()):
         # La pile est implémentée de gauche à droite. C'est-à-dire que le dernier élément ajouté est le dernier élément de la liste.
-        self._items = item_set[:]
+        self._items = list(item_set)[:]
 
     @property
-    def sommet(self):
+    def sommet(self) -> T:
         if not len(self._items):
             return None
 
         return self._items[-1]
 
     @property
-    def vide(self):
+    def vide(self) -> bool:
         return len(self._items) == 0
 
     @property
-    def taille(self):
+    def taille(self) -> int:
         return len(self._items)
 
     @property
-    def items(self):
-        return self._items
+    def items(self) -> list[T]:
+        return self._items[:]
 
-    def empiler(self, item):
+    def empiler(self, item: T) -> Self:
         self._items.append(item)
+        return self
 
-    def depiler(self):
+    def depiler(self) -> T:
         if not len(self._items):
             return None
 
