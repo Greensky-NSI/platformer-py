@@ -8,7 +8,7 @@ from src.types.enums import PlayerCache
 from src.types.movement import Direction
 from src.utils.globals import player_variables, env
 from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls
-
+from src.types.entities import hitbox_type
 
 class Player:
     def __init__(self, name, health):
@@ -108,3 +108,6 @@ class Player:
             return False
         return other.id == self.id
 
+    @property
+    def hitbox(self) -> hitbox_type:
+        return self._x, self._y, self._x + self._width, self._y - self._height
