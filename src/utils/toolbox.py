@@ -88,4 +88,4 @@ def hitbox_collide(a: hitbox_type, b: hitbox_type):
     :return: bool le résultat du test
     """
 
-    return (a[0] <= b[0] and a[2] >= b[2] and a[1] <= b[1] and a[3] >= b[3]) or (b[0] <= a[0] and b[2] >= a[2] and b[1] <= a[1] and b[3] >= a[3])
+    return (a[0] <= b[0] <= a[2] and a[3] <= b[1] <= a[1]) or (b[0] <= a[0] <= b[2] and b[3] <= a[1] <= b[1])
