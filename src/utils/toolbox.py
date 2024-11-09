@@ -1,6 +1,7 @@
 from typing import Literal
 from src.utils.globals import env
 from p5 import fill, stroke
+from src.types.entities import hitbox_type
 
 def parse_integer(number: any, default = 0) -> int:
     """
@@ -77,3 +78,14 @@ def parse_position_in_walls(position: int, dimension: Literal["width", "height"]
 
 
     return max(min(position, right_limit), left_limit)
+
+def hitbox_collide(a: hitbox_type, b: hitbox_type):
+    """
+    Vérifie si deux hitbox se touchent
+
+    :param a: hitbox de l'objet 1
+    :param b: hitbox de l'objet 2
+    :return: bool le résultat du test
+    """
+
+    return (a[0] <= b[0] and a[2] >= b[2] and a[1] <= b[1] and a[3] >= b[3]) or (b[0] <= a[0] and b[2] >= a[2] and b[1] <= a[1] and b[3] >= a[3])
