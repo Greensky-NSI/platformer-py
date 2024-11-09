@@ -1,5 +1,4 @@
 from typing import Generic, TypeVar
-from typing_extensions import Self
 
 T = TypeVar("T")
 
@@ -29,7 +28,7 @@ class Pile(Generic[T]):
     def items(self) -> list[T]:
         return self._items[:]
 
-    def empiler(self, item: T) -> Self:
+    def empiler(self, item: T):
         self._items.append(item)
         return self
 
