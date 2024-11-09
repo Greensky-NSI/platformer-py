@@ -24,8 +24,8 @@ class movements:
 class player_variables:
     max_health =  100
     min_health = 0
-    width = 10
-    height = 20
+    width = 30
+    height = 52
     delta_speed = 5
     falling_delta_speed = int(delta_speed)
 
