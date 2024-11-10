@@ -1,7 +1,9 @@
 # Fichier qui décore le cadre du jeu
-from src.utils.toolbox import safe_fill
-from src.utils.globals import env, couleurs
 from p5 import rect, background, no_stroke
+
+from src.utils.globals import env, couleurs
+from src.utils.toolbox import safe_fill
+
 
 def decoration():
     background(couleurs.background_fill_color)

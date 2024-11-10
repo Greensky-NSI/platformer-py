@@ -1,7 +1,10 @@
 from typing import Literal
-from src.utils.globals import env
+
 from p5 import fill, stroke
+
 from src.types.entities import hitbox_type
+from src.utils.globals import env
+
 
 def parse_integer(number: any, default = 0) -> int:
     """

@@ -1,14 +1,17 @@
 from math import sin
 from uuid import uuid4
+
 from p5 import translate
-from src.Designs.playerDesign import draw_face
+
+from src.Designs.playerDesign import draw_face, draw_left_profile, draw_right_profile
 from src.abstract.Cache import Cache
 from src.abstract.Ticker import Ticker
+from src.types.entities import hitbox_type
 from src.types.enums import PlayerCache
 from src.types.movement import Direction
 from src.utils.globals import player_variables, env
 from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls
-from src.types.entities import hitbox_type
+
 
 class Player:
     def __init__(self, name, health):
@@ -31,6 +34,11 @@ class Player:
         new_position = parse_position_in_walls(parse_position(new_position, "width"), "width")
         new_position = parse_position_in_walls(new_position + self._width, "width") - self._width
         self._x = new_position
+
+        self._cache.cache(PlayerCache.LAST_DIRECTION, direction)
+
+    def stop_moving(self):
+        self._cache.delete(PlayerCache.LAST_DIRECTION)
 
     def fall(self):
         self._y = parse_position_in_walls(self._y + self._fds, "height")
@@ -72,7 +80,17 @@ class Player:
 
     def display(self):
         translate(self._x, self._y)
-        draw_face(1)
+
+        match self.last_direction:
+            case "left":
+                draw_left_profile(1)
+            case "right":
+                draw_right_profile(1)
+            case None:
+                draw_face(1)
+            case _:
+                raise ValueError(f"Erreur de valeur dans la dernière direction du joueur ({self.last_direction})")
+
         translate(-self._x, -self._y)
 
     @property
@@ -111,3 +129,7 @@ class Player:
     @property
     def hitbox(self) -> hitbox_type:
         return self._x, self._y, self._x + self._width, self._y - self._height
+
+    @property
+    def last_direction(self) -> Direction:
+        return self._cache.get(PlayerCache.LAST_DIRECTION, None)

@@ -1,7 +1,5 @@
 # Variables à utiliser dans tout le projet
 # Les variables sont définies ici sous forme de classe pour éviter les problèmes de portée, et pour avoir l'auto complétion dans les IDE, ainsi que la vérification de type/erreurs pré-exécution
-from p5 import Color
-
 
 ## Couleurs
 class couleurs_cadeau:

@@ -1,6 +1,8 @@
 from p5 import translate, scale, rect, strokeWeight, ellipse
-from src.utils.toolbox import safe_fill, safe_stroke
+
 from src.utils.globals import variables_cadeau
+from src.utils.toolbox import safe_fill, safe_stroke
+
 
 def cadeau_ruban():
     safe_fill(variables_cadeau.couleurs.couleur_ruban)
