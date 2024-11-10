@@ -1,14 +1,14 @@
-from src.utils.toolbox import parse_integer, parse_position, safe_stroke, safe_fill, parse_position_in_walls
-from src.utils.globals import player_variables, env
-from src.types.movement import Direction
-from src.abstract.Cache import Cache
-from src.types.enums import PlayerCache
 from math import sin
 from uuid import uuid4
-from src.abstract.Ticker import Ticker
-from p5 import translate, scale
-
+from p5 import translate
 from src.Designs.playerDesign import draw_face
+from src.abstract.Cache import Cache
+from src.abstract.Ticker import Ticker
+from src.types.enums import PlayerCache
+from src.types.movement import Direction
+from src.utils.globals import player_variables, env
+from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls
+from src.types.entities import hitbox_type
 
 class Player:
     def __init__(self, name, health):
@@ -72,7 +72,7 @@ class Player:
 
     def display(self):
         translate(self._x, self._y)
-        draw_face(1.2)
+        draw_face(1)
         translate(-self._x, -self._y)
 
     @property
@@ -108,3 +108,6 @@ class Player:
             return False
         return other.id == self.id
 
+    @property
+    def hitbox(self) -> hitbox_type:
+        return self._x, self._y, self._x + self._width, self._y - self._height

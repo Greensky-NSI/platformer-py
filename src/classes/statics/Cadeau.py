@@ -1,4 +1,5 @@
 from src.Designs.cadeau import cadeau_dessin
+from src.types.entities import hitbox_type
 from src.utils.globals import variables_cadeau
 
 class Cadeau:
@@ -26,3 +27,7 @@ class Cadeau:
 
     def hide(self):
         self._displayed = False
+
+    @property
+    def hitbox(self) -> hitbox_type:
+        return self._x, self._y, self._x + self.width, self._y - self.height

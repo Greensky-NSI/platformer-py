@@ -11,3 +11,6 @@ class PlayerCache:
     JUMP_START_Y = "player_jump_start_height"
     JUMP_LAST_OUTPUT = "player_jump_function_last_y"
     TOUCHED_GROUND = "player_touched_ground_after_jump"
+
+class DOMCache:
+    CHECK_FOR_GIFTS = "dom_run_gift_collisions_test"

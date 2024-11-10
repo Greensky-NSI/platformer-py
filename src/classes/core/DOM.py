@@ -1,13 +1,21 @@
+from src.abstract.Cache import Cache
 from src.classes.mobs.player import Player
 from src.classes.statics.Cadeau import Cadeau
 from src.classes.typeClasses.DOM import EntitiesType
 from typing import List
+
+from src.types.enums import DOMCache
 from src.utils.globals import env
 from src.abstract.Ticker import Ticker
+from src.abstract.Stack import Pile
+from src.utils.toolbox import hitbox_collide
+
 
 class DOM:
     entities: EntitiesType = EntitiesType()
     ticker: Ticker
+    collected_gifts: Pile[Cadeau] = Pile[Cadeau]()
+    _cache = Cache = Cache()
 
     def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = ()):
         # Assertions
@@ -51,12 +59,33 @@ class DOM:
         if not player in self.entities.players:
             self.entities.players.append(player)
 
+    def check_collision_with_gifts_player(self, player: Player):
+        player_hitbox = player.hitbox  # On stocke la hitbox pour ne pas avoir à la re-calculer constamment
+        for gift in self.entities.gifts:
+            if not gift.affiche:
+                continue
+
+            if hitbox_collide(player_hitbox, gift.hitbox):
+                gift.hide()
+                self.collected_gifts.empiler(gift)
+
+    def check_gift_collisions(self):
+        if self.collected_gifts.taille == len(self.entities.gifts):
+            self._cache.cache(DOMCache.CHECK_FOR_GIFTS, False)
+            return
+
+        for player in self.entities.players:
+            self.check_collision_with_gifts_player(player)
+
     def display(self):
         for player in self.entities.players:
             player.display()
 
         for cadeau in self.entities.gifts:
             cadeau.display()
+
+        if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
+            self.check_gift_collisions()
 
     @property
     def dom_ticker(self):
