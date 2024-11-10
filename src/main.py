@@ -1,6 +1,6 @@
 from p5 import *
 
-from src.classes.environnement.decoration import decoration
+from src.Designs.decoration import decoration
 from src.classes.mobs.player import Player
 from src.custom_types import *
 from src.utils.globals import env, player_variables
