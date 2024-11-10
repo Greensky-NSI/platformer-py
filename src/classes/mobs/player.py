@@ -1,14 +1,17 @@
 from math import sin
 from uuid import uuid4
+
 from p5 import translate
+
 from src.Designs.playerDesign import draw_face, draw_left_profile, draw_right_profile
 from src.abstract.Cache import Cache
 from src.abstract.Ticker import Ticker
+from src.types.entities import hitbox_type
 from src.types.enums import PlayerCache
 from src.types.movement import Direction
 from src.utils.globals import player_variables, env
 from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls
-from src.types.entities import hitbox_type
+
 
 class Player:
     def __init__(self, name, health):

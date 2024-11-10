@@ -1,6 +1,8 @@
 from p5 import rect
+
 from src.utils.globals import player_variables
 from src.utils.toolbox import safe_fill
+
 
 def draw_head(i=1):
     safe_fill(player_variables.player_colors["head_color"])
