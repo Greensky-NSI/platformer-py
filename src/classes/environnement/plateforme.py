@@ -1,3 +1,8 @@
+from p5 import rect
+
+from src.utils.toolbox import safe_fill
+
+
 class Plateforme:
     def __init__(self, x, y, largeur, hauteur, couleur):
         """
