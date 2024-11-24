@@ -29,16 +29,17 @@ class Particle:
                     self.pos_porte[1] - self.h < self.y < self.pos_porte[1] + self.h))
 
 class Door:
-    def __init__(self, x, y, longueur, hauteur, exit=False, particles: list[Particle] = []):
+    def __init__(self, x, y, longueur, hauteur, exit=False, particles: list[Particle] = [], *, couleur=(0, 0, 0)):
         self.x = x
-        self.y = -y
+        self.y = y
         self.l = longueur
         self.h = hauteur
         self.exit = exit
         self.particles = particles
+        self.couleur = couleur
 
     def display(self):
-        draw_door(self.x, self.y, self.l, self.h)
+        draw_door(self.x, self.y, self.l, self.h, self.couleur)
 
     def draw_particles(self):
         for p in self.particles:
@@ -49,3 +50,7 @@ class Door:
                 self.particles.remove(p)
             if p.pos_porte[0] - 1 < p.x < p.pos_porte[0] + 1 and p.pos_porte[1] - 1 < p.y < p.pos_porte[1] + 1:
                 self.particles.remove(p)
+
+    @property
+    def hitbox(self):
+        return self.x, self.y, self.x + self.l, self.y - self.h
