@@ -1,6 +1,7 @@
 import random
 
 from p5 import *
+from src.Designs.DoorDesign import draw_door
 
 
 class Door():
