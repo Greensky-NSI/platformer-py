@@ -11,9 +11,11 @@ def setup():
     size(env.width, env.height)
     game_ticker.register("game_start")
 
+
 player = Player("Greensky", 100)
 
 game_DOM.add_player_in_dom(player)
+
 
 def draw():
     game_ticker.tick()
@@ -40,5 +42,6 @@ def draw():
         player.stop_moving()
     if mouse_is_pressed:
         player.jump(game_ticker)
+
 
 run()

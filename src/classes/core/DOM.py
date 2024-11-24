@@ -19,8 +19,10 @@ class DOM:
 
     def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = ()):
         # Assertions
-        assert all([x is not None and isinstance(x, Player) for x in players]), "La liste des joueurs du DOM contient des éléments qui ne sont pas des joueurs"
-        assert all([x is not None and isinstance(x, Cadeau) for x in gifts]), "La liste des cadeaux du DOM contient des éléments qui ne sont pas des cadeaux"
+        assert all([x is not None and isinstance(x, Player) for x in
+                    players]), "La liste des joueurs du DOM contient des éléments qui ne sont pas des joueurs"
+        assert all([x is not None and isinstance(x, Cadeau) for x in
+                    gifts]), "La liste des cadeaux du DOM contient des éléments qui ne sont pas des cadeaux"
 
         # Assignations
         self.entities.players = list(players)

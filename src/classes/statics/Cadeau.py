@@ -2,8 +2,9 @@ from src.Designs.cadeau import cadeau_dessin
 from src.types.entities import hitbox_type
 from src.utils.globals import variables_cadeau
 
+
 class Cadeau:
-    def __init__(self, *, x = 0, y = 0, echelle = 1):
+    def __init__(self, *, x=0, y=0, echelle=1):
         self._x = x
         self._y = y
         self._scale = echelle

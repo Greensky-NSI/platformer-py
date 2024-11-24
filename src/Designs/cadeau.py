@@ -11,6 +11,7 @@ def cadeau_ruban():
     rect(0, -(variables_cadeau.size // 2 + variables_cadeau.epaisseur_ruban // 2), variables_cadeau.size,
          variables_cadeau.epaisseur_ruban)  # Ruban horizontal
 
+
 def cadeau_noeud():
     safe_fill(variables_cadeau.couleurs.couleur_ruban)
     ellipse(variables_cadeau.size // 2 - variables_cadeau.size // 8, -variables_cadeau.size * 1.05,
@@ -18,11 +19,13 @@ def cadeau_noeud():
     ellipse(variables_cadeau.size // 2 + variables_cadeau.size // 8, -variables_cadeau.size,
             variables_cadeau.tailles_noeuds[1], variables_cadeau.tailles_noeuds[1])
 
+
 def cadeau_boite():
     safe_fill(variables_cadeau.couleurs.couleur_principale)
     rect(0, 0, variables_cadeau.size, -variables_cadeau.size)
 
-def cadeau_dessin(x, y, t = 1):
+
+def cadeau_dessin(x, y, t=1):
     """
     Dessine un cadeau
 

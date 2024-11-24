@@ -26,7 +26,7 @@ class Plateforme:
         Affiche la plateforme sur l'écran
         """
         self.couleur = (139, 69, 19)
-        safe_fill(self.couleur)# couleur marron pour représenter une plateforme classique
+        safe_fill(self.couleur)  # couleur marron pour représenter une plateforme classique
         rect(self.x, self.y, self.largeur, self.hauteur)
 
     def collision(self, mob):
@@ -40,8 +40,8 @@ class Plateforme:
             bool: True si le joueur est en collision avec la plateforme, sinon False.
         """
         return (
-            mob.x + mob.largeur > self.x and
-            mob.x < self.x + self.largeur and
-            mob.y + mob.hauteur > self.y and
-            mob.y < self.y + self.hauteur
+                mob.x + mob.largeur > self.x and
+                mob.x < self.x + self.largeur and
+                mob.y + mob.hauteur > self.y and
+                mob.y < self.y + self.hauteur
         )
