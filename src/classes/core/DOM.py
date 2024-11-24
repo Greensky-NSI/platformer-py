@@ -9,6 +9,8 @@ from src.types.DOM import EntitiesType
 from src.types.enums import DOMCache
 from src.utils.globals import env
 from src.utils.toolbox import hitbox_collide
+from src.classes.statics.Door import Door
+from src.classes.environnement.plateforme import Plateforme
 
 
 class DOM:
@@ -17,28 +19,39 @@ class DOM:
     collected_gifts: Pile[Cadeau] = Pile[Cadeau]()
     _cache = Cache = Cache()
 
-    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = ()):
+    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = (), doors: List[Door] = (), platforms: List[Plateforme] = ()):
         # Assertions
         assert all([x is not None and isinstance(x, Player) for x in
                     players]), "La liste des joueurs du DOM contient des éléments qui ne sont pas des joueurs"
         assert all([x is not None and isinstance(x, Cadeau) for x in
                     gifts]), "La liste des cadeaux du DOM contient des éléments qui ne sont pas des cadeaux"
+        assert all([x is not None and isinstance(x, Door) for x in
+                    doors]), "La liste des portes du DOM contient des éléments qui ne sont pas des portes"
+        assert all([x is not None and isinstance(x, Plateforme) for x in
+                    platforms]), "La liste des plateformes du DOM contient des éléments qui ne sont pas des plateformes"
 
         # Assignations
         self.entities.players = list(players)
         self.entities.gifts = list(gifts)
+        self.entities.doors = list(doors)
+        self.entities.platforms = list(platforms)
         self.ticker = ticker
 
     def apply_players_gravity(self):
         for player in self.entities.players:
             if player.jumping:
                 continue
-            # à compléter avec les plateformes
-            ground_y = env.height - env.wall_total_width
+
+            platform_heights_under_player = [platform.y for platform in self.entities.platforms if platform.y >= player.y and platform.x <= player.x <= platform.x + platform.largeur]
+            platform_heights_under_player.append(env.height - env.wall_total_width)
+
+            ground_y = min(platform_heights_under_player)
 
             distance_from_ground = ground_y - player.y
-            if distance_from_ground > 0:
+            if distance_from_ground > player.falling_delta_speed:
                 player.fall()
+            elif distance_from_ground > 0:
+                player.fall(distance_from_ground)
             else:
                 player.touched_ground()
 
@@ -85,6 +98,12 @@ class DOM:
 
         for cadeau in self.entities.gifts:
             cadeau.display()
+
+        for plateforme in self.entities.platforms:
+            plateforme.afficher()
+
+        for door in self.entities.doors:
+            door.display()
 
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()
