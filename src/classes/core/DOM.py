@@ -5,7 +5,7 @@ from src.abstract.Stack import Pile
 from src.abstract.Ticker import Ticker
 from src.classes.mobs.player import Player
 from src.classes.statics.Cadeau import Cadeau
-from src.classes.typeClasses.DOM import EntitiesType
+from src.types.DOM import EntitiesType
 from src.types.enums import DOMCache
 from src.utils.globals import env
 from src.utils.toolbox import hitbox_collide
