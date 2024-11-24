@@ -135,3 +135,7 @@ class Player:
     @property
     def last_direction(self) -> Direction:
         return self._cache.get(PlayerCache.LAST_DIRECTION, None)
+
+    @property
+    def width(self):
+        return self._width
