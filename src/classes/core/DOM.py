@@ -42,7 +42,7 @@ class DOM:
             if player.jumping:
                 continue
 
-            platform_heights_under_player = [platform.y for platform in self.entities.platforms if platform.y >= player.y and platform.x <= player.x <= platform.x + platform.largeur]
+            platform_heights_under_player = [platform.y for platform in self.entities.platforms if platform.y >= player.y and (platform.x <= player.x <= platform.x + platform.largeur or platform.x <= player.x + player.width <= platform.x + platform.largeur)]
             platform_heights_under_player.append(env.height - env.wall_total_width)
 
             ground_y = min(platform_heights_under_player)
