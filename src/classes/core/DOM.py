@@ -92,6 +92,12 @@ class DOM:
         for player in self.entities.players:
             self.check_collision_with_gifts_player(player)
 
+    def check_for_doors(self):
+        for player in self.entities.players:
+            for door in self.entities.doors:
+                if hitbox_collide(player.hitbox, door.hitbox):
+                    raise NotImplementedError("La collision avec les portes n'est pas encore implémentée")
+
     def display(self):
         for player in self.entities.players:
             player.display()
@@ -104,6 +110,8 @@ class DOM:
 
         for door in self.entities.doors:
             door.display()
+
+        self.check_for_doors()
 
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()
