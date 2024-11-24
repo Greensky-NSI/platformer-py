@@ -4,7 +4,7 @@ from src.utils.toolbox import safe_fill
 
 
 class Plateforme:
-    def __init__(self, x, y, largeur, hauteur, couleur):
+    def __init__(self, x, y, largeur, hauteur, couleur = (139, 69, 19)):
         """
         Initialise une nouvelle plateforme.
 
@@ -25,7 +25,6 @@ class Plateforme:
         """
         Affiche la plateforme sur l'écran
         """
-        self.couleur = (139, 69, 19)
         safe_fill(self.couleur)  # couleur marron pour représenter une plateforme classique
         rect(self.x, self.y, self.largeur, self.hauteur)
 
