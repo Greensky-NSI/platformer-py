@@ -40,8 +40,10 @@ class Player:
     def stop_moving(self):
         self._cache.delete(PlayerCache.LAST_DIRECTION)
 
-    def fall(self):
-        self._y = parse_position_in_walls(self._y + self._fds, "height")
+    def fall(self, speed = None):
+        if speed is None:
+            speed = self._fds
+        self._y = parse_position_in_walls(self._y + speed, "height")
 
     def jump(self, ticker: Ticker):
         if not self.can_jump:
