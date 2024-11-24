@@ -4,17 +4,6 @@ from p5 import *
 from src.Designs.DoorDesign import draw_door
 
 
-class Door():
-    def __init__(self, x, y, longueur, hauteur, Exit=False):
-        self.x = x
-        self.y = -y
-        self.l = longueur
-        self.h = hauteur
-        self.Exit = Exit
-
-    def display(self):
-        draw_door(self.x, self.y, self.l, self.h)
-
 
 class Particle:
     def __init__(self, x, y, longueur_porte, hauteur_porte, vitesse_particule=3):
@@ -39,24 +28,24 @@ class Particle:
         return not ((self.pos_porte[0] - self.l < self.x < self.pos_porte[0] + self.l) and (
                     self.pos_porte[1] - self.h < self.y < self.pos_porte[1] + self.h))
 
+class Door:
+    def __init__(self, x, y, longueur, hauteur, exit=False, particles: list[Particle] = []):
+        self.x = x
+        self.y = -y
+        self.l = longueur
+        self.h = hauteur
+        self.exit = exit
+        self.particles = particles
 
-def creer_particule(x, y, longueur, hauteur):
-    return Particle(x, y, longueur, hauteur)
+    def display(self):
+        draw_door(self.x, self.y, self.l, self.h)
 
+    def draw_particles(self):
+        for p in self.particles:
+            p.update()
+            p.display()
 
-global particles, Porte
-particles = [creer_particule(256, 256, 41, 53) for x in range(15)]
-Porte = Door(256, 256, 41, 53)
-
-
-def draw_particles():
-    # Mise à jour et affichage des particules
-    for p in particles:
-        p.update()
-        p.display()
-
-        # Supprime les particules qui sortent de l'écran
-        if p.particle_position():
-            p.v *= -2
-        if p.pos_porte[0] - 1 < p.x < p.pos_porte[0] + 1 and p.pos_porte[1] - 1 < p.y < p.pos_porte[1] + 1:
-            particles.remove(p)
+            if p.particle_position():
+                self.particles.remove(p)
+            if p.pos_porte[0] - 1 < p.x < p.pos_porte[0] + 1 and p.pos_porte[1] - 1 < p.y < p.pos_porte[1] + 1:
+                self.particles.remove(p)
