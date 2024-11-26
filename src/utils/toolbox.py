@@ -99,3 +99,14 @@ def hitbox_collide(a: hitbox_type, b: hitbox_type):
     """
 
     return (a[0] <= b[0] <= a[2] and a[3] <= b[1] <= a[1]) or (b[0] <= a[0] <= b[2] and b[3] <= a[1] <= b[1])
+
+def is_pos_in_walls(x: int, y: int) -> bool:
+    """
+    Vérifie si la position donnée est dans les murs
+
+    :param x: int - La position en x
+    :param y: int - La position en y
+    :return: bool - Le résultat du test
+    """
+
+    return env.wall_total_width <= x <= env.width - env.wall_total_width and env.wall_total_width <= y <= env.height - env.wall_total_width
