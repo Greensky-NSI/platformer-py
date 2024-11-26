@@ -28,7 +28,7 @@ class player_variables:
     width = 30
     height = 52
     delta_speed = 5
-    falling_delta_speed = int(delta_speed * 1)
+    falling_delta_speed = int(delta_speed * 1.4)
 
     deplacements_keymap = movements
 
