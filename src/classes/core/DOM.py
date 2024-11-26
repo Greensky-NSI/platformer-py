@@ -117,10 +117,15 @@ class DOM:
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()
 
+    def set_ticker(self, ticker: Ticker):
+        self.ticker = ticker
+
     @property
     def dom_ticker(self):
         return self.ticker
 
     @staticmethod
-    def from_level(level: Level):
-        return DOM(players=level.players, gifts=level.gifts, doors=level.doors, platforms=level.platforms)
+    def from_level(level: Level, player: Player):
+        player.teleport(*level.player_spawn)
+
+        return DOM(gifts=level.gifts, doors=level.doors, platforms=level.platforms, players=[player])
