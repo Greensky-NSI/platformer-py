@@ -7,4 +7,6 @@ from src.levels import one
 player = Player("Greensky", 100)
 
 game_ticker = Ticker()
-game_DOM = DOM(ticker=game_ticker)
+game_DOM = DOM.from_level(one.level_one, player)
+
+game_DOM.set_ticker(game_ticker)
