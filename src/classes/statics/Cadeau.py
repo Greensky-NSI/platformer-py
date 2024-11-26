@@ -29,6 +29,9 @@ class Cadeau:
     def hide(self):
         self._displayed = False
 
+    def reveal(self):
+        self._displayed = True
+
     @property
     def hitbox(self) -> hitbox_type:
         return self._x, self._y, self._x + self.width, self._y - self.height
