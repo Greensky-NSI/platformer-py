@@ -1,4 +1,5 @@
 from src.classes.environnement.plateforme import Plateforme
+from src.classes.mobs.Monster import Monster
 from src.classes.statics.Cadeau import Cadeau
 from src.classes.statics.Door import Door
 from src.utils.toolbox import is_pos_in_walls
@@ -10,6 +11,7 @@ class Level:
     _platforms: list[Plateforme]
     _player_spawn: tuple[int, int]
     _number: int = 0
+    _monsters: list[Monster]
 
     def __init__(self, number: int):
         self._number = number
@@ -17,6 +19,7 @@ class Level:
         self._gifts = []
         self._doors = []
         self._platforms = []
+        self._monsters = []
         self._player_spawn = (50, 50)
 
     def add_platform(self, platform: Plateforme):
@@ -33,6 +36,11 @@ class Level:
         assert isinstance(door, Door), "La porte doit être une instance de Door"
 
         self._doors.append(door)
+
+    def add_monster(self, monster: Monster):
+        assert isinstance(monster, Monster), "Le monstre doit être une instance de Monster"
+
+        self._monsters.append(monster)
 
     def set_player_spawn(self, x: int, y: int):
         assert isinstance(x, int), "La coordonnée x doit être un entier"
@@ -60,3 +68,7 @@ class Level:
     @property
     def number(self):
         return self._number
+
+    @property
+    def monsters(self):
+        return self._monsters
