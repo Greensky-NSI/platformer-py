@@ -1,5 +1,6 @@
 from typing import List
 
+from src.Designs.end_screen import end_screen
 from src.abstract.Cache import Cache
 from src.abstract.Stack import Pile
 from src.abstract.Ticker import Ticker
@@ -19,6 +20,7 @@ class DOM:
     ticker: Ticker
     collected_gifts: Pile[Cadeau] = Pile[Cadeau]()
     _cache = Cache = Cache()
+    _ended = False
 
     def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = (), doors: List[Door] = (), platforms: List[Plateforme] = ()):
         # Assertions
@@ -97,9 +99,16 @@ class DOM:
         for player in self.entities.players:
             for door in self.entities.doors:
                 if hitbox_collide(player.hitbox, door.hitbox):
-                    raise NotImplementedError("La collision avec les portes n'est pas encore implémentée")
+                    self._ended = True
+
+    def on_end(self):
+        end_screen()
 
     def display(self):
+        if self._ended:
+            self.on_end()
+            return
+
         for player in self.entities.players:
             player.display()
 
@@ -109,10 +118,11 @@ class DOM:
         for plateforme in self.entities.platforms:
             plateforme.afficher()
 
-        for door in self.entities.doors:
-            door.display()
+        if self.collected_all_gifts:
+            for door in self.entities.doors:
+                door.display()
 
-        self.check_for_doors()
+            self.check_for_doors()
 
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()
@@ -123,6 +133,10 @@ class DOM:
     @property
     def dom_ticker(self):
         return self.ticker
+
+    @property
+    def collected_all_gifts(self):
+        return self.collected_gifts.taille == len(self.entities.gifts)
 
     @staticmethod
     def from_level(level: Level, player: Player):
