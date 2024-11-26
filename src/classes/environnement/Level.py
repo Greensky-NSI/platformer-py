@@ -9,10 +9,15 @@ class Level:
     _doors: list[Door]
     _platforms: list[Plateforme]
     _player_spawn: tuple[int, int]
-    _number: int
+    _number: int = 0
 
     def __init__(self, number: int):
         self._number = number
+
+        self._gifts = []
+        self._doors = []
+        self._platforms = []
+        self._player_spawn = (50, 50)
 
     def add_platform(self, platform: Plateforme):
         assert isinstance(platform, Plateforme), "La plateforme doit être une instance de Plateforme"
