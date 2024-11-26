@@ -1,5 +1,6 @@
 from src.classes.environnement.Level import Level
 from src.classes.environnement.plateforme import Plateforme
+from src.classes.mobs.Monster import Monster
 from src.classes.statics.Cadeau import Cadeau
 from src.classes.statics.Door import Door
 
@@ -24,5 +25,7 @@ level_one.add_cadeau(Cadeau(x=545, y=603, echelle=.8))
 level_one.add_cadeau(Cadeau(x=22, y=131, echelle=.6))
 
 level_one.set_player_spawn(54, 774)
+
+level_one.add_monster(Monster(y=703, move_range_x=(458, 534), echelle=1, delta_x=1))
 
 level_one.add_door(Door.create_door_with_particles(546, 150, 30, 40, 10))
