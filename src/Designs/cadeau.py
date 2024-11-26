@@ -1,4 +1,4 @@
-from p5 import translate, scale, rect, strokeWeight, ellipse
+from p5 import translate, scale, rect, strokeWeight, ellipse, no_stroke
 
 from src.utils.globals import variables_cadeau
 from src.utils.toolbox import safe_fill, safe_stroke
@@ -40,9 +40,11 @@ def cadeau_dessin(x, y, t=1):
     strokeWeight(2)
     safe_stroke((0, 0, 0))
 
-    cadeau_noeud()
+    # cadeau_noeud()   # Épuration du dessin car trop de lag
     cadeau_boite()
-    cadeau_ruban()
+    # cadeau_ruban()   # Épuration du dessin car trop de lag
+
+    no_stroke()
 
     scale(1 / t)
     translate(-x, -y)
