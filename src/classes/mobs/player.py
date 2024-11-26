@@ -10,7 +10,7 @@ from src.types.entities import hitbox_type
 from src.types.enums import PlayerCache
 from src.types.movement import Direction
 from src.utils.globals import player_variables, env
-from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls
+from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls, is_pos_in_walls
 
 
 class Player:
@@ -94,6 +94,12 @@ class Player:
                 raise ValueError(f"Erreur de valeur dans la dernière direction du joueur ({self.last_direction})")
 
         translate(-self._x, -self._y)
+
+    def teleport(self, x: int, y: int):
+        assert is_pos_in_walls(x, y), "La position du joueur doit être dans les murs"
+
+        self._x = x
+        self._y = y
 
     @property
     def jumping(self):
