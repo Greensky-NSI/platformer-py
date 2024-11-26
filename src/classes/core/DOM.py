@@ -3,6 +3,7 @@ from typing import List
 from src.abstract.Cache import Cache
 from src.abstract.Stack import Pile
 from src.abstract.Ticker import Ticker
+from src.classes.environnement.Level import Level
 from src.classes.mobs.player import Player
 from src.classes.statics.Cadeau import Cadeau
 from src.types.DOM import EntitiesType
@@ -119,3 +120,7 @@ class DOM:
     @property
     def dom_ticker(self):
         return self.ticker
+
+    @staticmethod
+    def from_level(level: Level):
+        return DOM(players=level.players, gifts=level.gifts, doors=level.doors, platforms=level.platforms)
