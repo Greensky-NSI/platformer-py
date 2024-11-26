@@ -56,6 +56,12 @@ class Door:
             if p.pos_porte[0] - 1 < p.x < p.pos_porte[0] + 1 and -p.pos_porte[1] - 1 < p.y < -p.pos_porte[1] + 1:
                 self.particles.remove(p)
 
+    @staticmethod
+    def create_door_with_particles(x, y, longueur, hauteur, nb_particules):
+        door = Door(x, y, longueur, hauteur)
+        door.particles = Particle.create_particles(nb_particules, x, y, longueur, hauteur)
+        return door
+
     @property
     def hitbox(self):
         return self.x, self.y, self.x + self.l, self.y - self.h
