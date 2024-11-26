@@ -43,5 +43,12 @@ def draw():
     if mouse_is_pressed:
         player.jump(game_ticker)
 
+    if env.dev:
+        fill(0)
+        text(f"X: {mouse_x} Y: {mouse_y}", 30, 30)
+
+        if mouse_is_pressed and mouse_button == "RIGHT":
+            player.teleport(mouse_x, mouse_y)
+
 
 run()
