@@ -10,7 +10,7 @@ from src.types.entities import hitbox_type
 from src.types.enums import PlayerCache
 from src.types.movement import Direction
 from src.utils.globals import player_variables, env
-from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls
+from src.utils.toolbox import parse_integer, parse_position, parse_position_in_walls, is_pos_in_walls
 
 
 class Player:
@@ -40,8 +40,10 @@ class Player:
     def stop_moving(self):
         self._cache.delete(PlayerCache.LAST_DIRECTION)
 
-    def fall(self):
-        self._y = parse_position_in_walls(self._y + self._fds, "height")
+    def fall(self, speed = None):
+        if speed is None:
+            speed = self._fds
+        self._y = parse_position_in_walls(self._y + speed, "height")
 
     def jump(self, ticker: Ticker):
         if not self.can_jump:
@@ -93,6 +95,12 @@ class Player:
 
         translate(-self._x, -self._y)
 
+    def teleport(self, x: int, y: int):
+        assert is_pos_in_walls(x, y), "La position du joueur doit être dans les murs"
+
+        self._x = x
+        self._y = y
+
     @property
     def jumping(self):
         return self._cache.get(PlayerCache.JUMPING, False)
@@ -133,3 +141,7 @@ class Player:
     @property
     def last_direction(self) -> Direction:
         return self._cache.get(PlayerCache.LAST_DIRECTION, None)
+
+    @property
+    def width(self):
+        return self._width

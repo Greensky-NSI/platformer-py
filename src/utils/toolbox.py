@@ -6,7 +6,7 @@ from src.types.entities import hitbox_type
 from src.utils.globals import env
 
 
-def parse_integer(number: any, default = 0) -> int:
+def parse_integer(number: any, default=0) -> int:
     """
     Renvoie l'entrée sous forme d'entier si possible, sinon renvoie la valeur par défaut.
 
@@ -16,7 +16,8 @@ def parse_integer(number: any, default = 0) -> int:
     """
     return int(parse_float(number, default))
 
-def parse_float(number: any, default = 0.0) -> float:
+
+def parse_float(number: any, default=0.0) -> float:
     """
     Renvoie l'entrée sous forme de flottant si possible, sinon renvoie la valeur par défaut.
 
@@ -29,6 +30,7 @@ def parse_float(number: any, default = 0.0) -> float:
         return float(number)
     except ValueError:
         return default
+
 
 def parse_position(position: int, dimension: Literal["width", "height"] = "width") -> int:
     """
@@ -44,6 +46,8 @@ def parse_position(position: int, dimension: Literal["width", "height"] = "width
         dimens = env.height
 
     return max(min(position, dimens), 0)
+
+
 def safe_fill(couleur: tuple[int, int, int]):
     """
     Remplit la forme suivante avec la couleur donnée, et sauvegarde la couleur actuelle.
@@ -53,6 +57,8 @@ def safe_fill(couleur: tuple[int, int, int]):
     r, g, b = couleur
 
     fill(r, g, b)
+
+
 def safe_stroke(couleur: tuple[int, int, int]):
     """
     Définit la couleur du contour suivant avec la couleur donnée, et sauvegarde la couleur actuelle.
@@ -62,6 +68,7 @@ def safe_stroke(couleur: tuple[int, int, int]):
     r, g, b = couleur
 
     stroke(r, g, b)
+
 
 def parse_position_in_walls(position: int, dimension: Literal["width", "height"] = "width") -> int:
     """
@@ -79,8 +86,8 @@ def parse_position_in_walls(position: int, dimension: Literal["width", "height"]
         left_limit = env.wall_width
         right_limit = env.height - env.wall_total_width
 
-
     return max(min(position, right_limit), left_limit)
+
 
 def hitbox_collide(a: hitbox_type, b: hitbox_type):
     """
@@ -92,3 +99,14 @@ def hitbox_collide(a: hitbox_type, b: hitbox_type):
     """
 
     return (a[0] <= b[0] <= a[2] and a[3] <= b[1] <= a[1]) or (b[0] <= a[0] <= b[2] and b[3] <= a[1] <= b[1])
+
+def is_pos_in_walls(x: int, y: int) -> bool:
+    """
+    Vérifie si la position donnée est dans les murs
+
+    :param x: int - La position en x
+    :param y: int - La position en y
+    :return: bool - Le résultat du test
+    """
+
+    return env.wall_total_width <= x <= env.width - env.wall_total_width and env.wall_total_width <= y <= env.height - env.wall_total_width

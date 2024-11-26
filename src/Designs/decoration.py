@@ -29,4 +29,3 @@ def decoration():
     rect(0, 0, env.width, env.wall_width)
     rect(env.width - env.wall_width, 0, env.wall_width, env.height)
     rect(0, env.height - env.wall_width, env.width, env.wall_width)
-

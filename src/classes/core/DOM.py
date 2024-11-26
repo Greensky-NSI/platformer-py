@@ -1,14 +1,19 @@
 from typing import List
 
+from src.Designs.end_screen import end_screen
 from src.abstract.Cache import Cache
 from src.abstract.Stack import Pile
 from src.abstract.Ticker import Ticker
+from src.classes.environnement.Level import Level
 from src.classes.mobs.player import Player
 from src.classes.statics.Cadeau import Cadeau
-from src.classes.typeClasses.DOM import EntitiesType
+from src.types.DOM import EntitiesType
 from src.types.enums import DOMCache
 from src.utils.globals import env
 from src.utils.toolbox import hitbox_collide
+from src.classes.statics.Door import Door
+from src.classes.environnement.plateforme import Plateforme
+from src.classes.mobs.Monster import Monster
 
 
 class DOM:
@@ -16,27 +21,46 @@ class DOM:
     ticker: Ticker
     collected_gifts: Pile[Cadeau] = Pile[Cadeau]()
     _cache = Cache = Cache()
+    _ended = False
+    spawn: tuple[int, int] = (0, 0)
 
-    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = ()):
+    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = (), doors: List[Door] = (), platforms: List[Plateforme] = (), monsters: List[Monster] = ()):
         # Assertions
-        assert all([x is not None and isinstance(x, Player) for x in players]), "La liste des joueurs du DOM contient des éléments qui ne sont pas des joueurs"
-        assert all([x is not None and isinstance(x, Cadeau) for x in gifts]), "La liste des cadeaux du DOM contient des éléments qui ne sont pas des cadeaux"
+        assert all([x is not None and isinstance(x, Player) for x in
+                    players]), "La liste des joueurs du DOM contient des éléments qui ne sont pas des joueurs"
+        assert all([x is not None and isinstance(x, Cadeau) for x in
+                    gifts]), "La liste des cadeaux du DOM contient des éléments qui ne sont pas des cadeaux"
+        assert all([x is not None and isinstance(x, Door) for x in
+                    doors]), "La liste des portes du DOM contient des éléments qui ne sont pas des portes"
+        assert all([x is not None and isinstance(x, Plateforme) for x in
+                    platforms]), "La liste des plateformes du DOM contient des éléments qui ne sont pas des plateformes"
+        assert all([x is not None and isinstance(x, Monster) for x in
+                    monsters]), "La liste des monstres du DOM contient des éléments qui ne sont pas des monstres"
 
         # Assignations
         self.entities.players = list(players)
         self.entities.gifts = list(gifts)
+        self.entities.doors = list(doors)
+        self.entities.platforms = list(platforms)
+        self.entities.monsters = list(monsters)
         self.ticker = ticker
+        self.spawn = players[0].x, players[0].y
 
     def apply_players_gravity(self):
         for player in self.entities.players:
             if player.jumping:
                 continue
-            # à compléter avec les plateformes
-            ground_y = env.height - env.wall_total_width
+
+            platform_heights_under_player = [platform.y for platform in self.entities.platforms if platform.y >= player.y and (platform.x <= player.x <= platform.x + platform.largeur or platform.x <= player.x + player.width <= platform.x + platform.largeur)]
+            platform_heights_under_player.append(env.height - env.wall_total_width)
+
+            ground_y = min(platform_heights_under_player)
 
             distance_from_ground = ground_y - player.y
-            if distance_from_ground > 0:
+            if distance_from_ground > player.falling_delta_speed:
                 player.fall()
+            elif distance_from_ground > 0:
+                player.fall(distance_from_ground)
             else:
                 player.touched_ground()
 
@@ -77,16 +101,72 @@ class DOM:
         for player in self.entities.players:
             self.check_collision_with_gifts_player(player)
 
+    def check_for_doors(self):
+        for player in self.entities.players:
+            for door in self.entities.doors:
+                if hitbox_collide(player.hitbox, door.hitbox):
+                    self._ended = True
+
+    def on_end(self):
+        end_screen()
+
+    def reset(self):
+        self.entities.players[0].teleport(*self.spawn)
+
+        self._ended = False
+        while not self.collected_gifts.vide:
+            gift = self.collected_gifts.depiler()
+            gift.reveal()
+
+        self._cache.delete(DOMCache.CHECK_FOR_GIFTS)
+
+    def check_collision_with_monsters(self):
+        for monster in self.entities.monsters:
+            for player in self.entities.players:
+                if hitbox_collide(player.hitbox, monster.hitbox):
+                    self.reset()
+
     def display(self):
+        if self._ended:
+            self.on_end()
+            return
+
         for player in self.entities.players:
             player.display()
 
         for cadeau in self.entities.gifts:
             cadeau.display()
 
+        for plateforme in self.entities.platforms:
+            plateforme.afficher()
+
+        for monster in self.entities.monsters:
+            monster.tick()
+            monster.display()
+
+        self.check_collision_with_monsters()
+        if self.collected_all_gifts:
+            for door in self.entities.doors:
+                door.display()
+
+            self.check_for_doors()
+
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()
+
+    def set_ticker(self, ticker: Ticker):
+        self.ticker = ticker
 
     @property
     def dom_ticker(self):
         return self.ticker
+
+    @property
+    def collected_all_gifts(self):
+        return self.collected_gifts.taille == len(self.entities.gifts)
+
+    @staticmethod
+    def from_level(level: Level, player: Player):
+        player.teleport(*level.player_spawn)
+
+        return DOM(gifts=level.gifts, doors=level.doors, platforms=level.platforms, players=[player], monsters=level.monsters)

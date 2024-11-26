@@ -13,5 +13,6 @@ class PlayerCache:
     TOUCHED_GROUND = "player_touched_ground_after_jump"
     LAST_DIRECTION = "player_last_direction"
 
+
 class DOMCache:
     CHECK_FOR_GIFTS = "dom_run_gift_collisions_test"

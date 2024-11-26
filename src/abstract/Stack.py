@@ -2,6 +2,7 @@ from typing import Generic, TypeVar
 
 T = TypeVar("T")
 
+
 class Pile(Generic[T]):
     _items: list[T] = []
 
@@ -42,7 +43,7 @@ class Pile(Generic[T]):
         return Pile(self._items)
 
     def __str__(self):
-        return f"Pile ({self.taille} éléments) { '✅' if not self.vide else '❌' }"
+        return f"Pile ({self.taille} éléments) {'✅' if not self.vide else '❌'}"
 
     def __repr__(self):
         return str(self)

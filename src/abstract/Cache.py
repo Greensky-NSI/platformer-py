@@ -4,7 +4,7 @@ class Cache:
     def __init__(self):
         self._cache = {}  # Initialisation du cache vide lors de la création d'une instance de la classe
 
-    def cache(self, key, value = None):
+    def cache(self, key, value=None):
         """
         Stocke une valeur dans le cache ou récupère le cache complet si aucune valeur n'est spécifiée.
 
@@ -30,7 +30,7 @@ class Cache:
         if key in self._cache:
             self._cache.pop(key)  # Supprime la valeur du cache si elle existe
 
-    def get(self, key, default = None):
+    def get(self, key, default=None):
         """
         Récupère une valeur du cache en utilisant la clé spécifiée.
 
@@ -39,7 +39,8 @@ class Cache:
 
         :return: any - La valeur correspondante à la clé dans le cache, ou la valeur par défaut si la clé n'existe pas.
         """
-        return self._cache.get(key, default)  # Renvoie la valeur correspondante à la clé dans le cache, ou la valeur par défaut si la clé n'existe pas.
+        return self._cache.get(key,
+                               default)  # Renvoie la valeur correspondante à la clé dans le cache, ou la valeur par défaut si la clé n'existe pas.
 
     def __repr__(self):
         resp = "Cache: {"
