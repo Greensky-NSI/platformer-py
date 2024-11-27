@@ -6,6 +6,14 @@ Code d'un jeu plateformer en Python avec p5 dans le cadre d'un projet de NSI
 
 * [p5 python](https://pypi.org/project/p5/)
 
+## Lancer le jeu
+
+Pour lancer le projet, suivez ces étapes :
+
+1. Télécharger [**Python 3.10.10**](https://www.python.org/downloads/release/python-31010/)
+1. Installer `p5` avec python  ( `py -m pip install p5` dans un terminal ) 
+1. Lancer le jeu : `py main.py` dans le terminal
+
 ## License
 
 Licensié avec une **license Apache 2-0**
