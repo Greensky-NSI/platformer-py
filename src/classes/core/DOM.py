@@ -1,4 +1,6 @@
 from typing import List
+from datetime import datetime
+from p5 import text, scale
 
 from src.Designs.end_screen import end_screen
 from src.abstract.Cache import Cache
@@ -10,7 +12,7 @@ from src.classes.statics.Cadeau import Cadeau
 from src.types.DOM import EntitiesType
 from src.types.enums import DOMCache
 from src.utils.globals import env
-from src.utils.toolbox import hitbox_collide
+from src.utils.toolbox import hitbox_collide, safe_fill
 from src.classes.statics.Door import Door
 from src.classes.environnement.plateforme import Plateforme
 from src.classes.mobs.Monster import Monster
@@ -45,6 +47,8 @@ class DOM:
         self.entities.monsters = list(monsters)
         self.ticker = ticker
         self.spawn = players[0].x, players[0].y
+
+        self._cache.cache(DOMCache.GAME_START_TIME, self.current_time)
 
     def apply_players_gravity(self):
         for player in self.entities.players:
@@ -105,7 +109,12 @@ class DOM:
         for player in self.entities.players:
             for door in self.entities.doors:
                 if hitbox_collide(player.hitbox, door.hitbox):
-                    self._ended = True
+                    self.ended_callback()
+
+    def ended_callback(self):
+        self._ended = True
+
+        self._cache.cache(DOMCache.GAME_END_TIME, self.current_time)
 
     def on_end(self):
         end_screen()
@@ -144,6 +153,8 @@ class DOM:
             monster.tick()
             monster.display()
 
+        self.display_time()
+
         self.check_collision_with_monsters()
         if self.collected_all_gifts:
             for door in self.entities.doors:
@@ -153,6 +164,34 @@ class DOM:
 
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()
+
+
+    def display_time(self):
+        time = self.current_time - self._cache.get(DOMCache.GAME_START_TIME)
+        time = time // 1000
+
+        safe_fill((30, 10, 10))
+
+        # Convert to seconds, minutes and hours
+        seconds = time % 60
+        minutes = time // 60
+        hours = minutes // 60
+
+        displayed_text = ""
+        if hours > 0:
+            displayed_text += f"{hours}h"
+        if minutes > 0:
+            if len(displayed_text) > 0:
+                displayed_text += " "
+            displayed_text += f"{minutes}m"
+        if seconds > 0:
+            if len(displayed_text) > 0:
+                displayed_text += " "
+            displayed_text += f"{seconds}s"
+
+        scale(1.2)
+        text(displayed_text, env.wall_total_width + 3, env.wall_total_width + 3)
+        scale(1 / 1.2)
 
     def set_ticker(self, ticker: Ticker):
         self.ticker = ticker
@@ -170,3 +209,7 @@ class DOM:
         player.teleport(*level.player_spawn)
 
         return DOM(gifts=level.gifts, doors=level.doors, platforms=level.platforms, players=[player], monsters=level.monsters)
+
+    @property
+    def current_time(self):
+        return int(datetime.now().timestamp() * 1000) # En millisecondes
