@@ -117,7 +117,8 @@ class DOM:
         self._cache.cache(DOMCache.GAME_END_TIME, self.current_time)
 
     def on_end(self):
-        end_screen()
+        time = self._cache.get(DOMCache.GAME_END_TIME) - self._cache.get(DOMCache.GAME_START_TIME)
+        end_screen(time)
 
     def reset(self):
         self.entities.players[0].teleport(*self.spawn)
