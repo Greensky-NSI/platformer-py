@@ -154,7 +154,7 @@ class DOM:
         if self._ended:
             if self.ticker.diff(DOMCache.GAME_END_TIME) > 180:
                 self.set_none_level()
-                niveaux[self._current_level][1] = True
+                niveaux[str(self._current_level)][1] = True
                 return
             self.on_end()
             return
@@ -202,9 +202,14 @@ class DOM:
         self.entities.platforms = level.platforms
         self.entities.monsters = level.monsters
         self._current_level = number
+        self.collected_gifts = Pile[Cadeau]()
 
         self._cache.cache(DOMCache.GAME_START_TIME, self.current_time)
         self._cache.delete(DOMCache.GAME_END_TIME)
+        self._cache.delete(DOMCache.CHECK_FOR_GIFTS)
+
+        for g in self.entities.gifts:
+            g.reveal()
 
         self._started = True
         self._ended = False
