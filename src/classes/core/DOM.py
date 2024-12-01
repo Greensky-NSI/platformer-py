@@ -104,7 +104,7 @@ class DOM:
     def check_for_doors(self):
         for player in self.entities.players:
             for door in self.entities.doors:
-                if hitbox_collide(player.hitbox, door.hitbox) and door.is_exit:
+                if hitbox_collide(player.hitbox, door.hitbox):
                     self._ended = True
 
     def on_end(self):
@@ -150,8 +150,8 @@ class DOM:
                 door.display()
             elif not door.is_exit:
                 door.display()
-    
-        self.check_for_doors()
+
+            self.check_for_doors()
 
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()

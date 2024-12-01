@@ -51,7 +51,7 @@ class env:
     wall_width = 20
     wall_border_stroke = 2
     wall_total_width = wall_width + wall_border_stroke
-    dev = True
+    dev = False
 
 
 ## Variables relatives au objets
