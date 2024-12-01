@@ -21,6 +21,7 @@ class Level:
         self._platforms = []
         self._monsters = []
         self._player_spawn = (50, 50)
+        self._ended = False
 
     def add_platform(self, platform: Plateforme):
         assert isinstance(platform, Plateforme), "La plateforme doit être une instance de Plateforme"
@@ -35,6 +36,11 @@ class Level:
     def add_door(self, door: Door):
         assert isinstance(door, Door), "La porte doit être une instance de Door"
 
+        self._doors.append(door)
+    
+    def add_door_on_player_spawn(self, longueur, hauteur, couleur=(0, 0, 0)):
+        door = Door(self._player_spawn[0] - longueur // 2, self._player_spawn[1], longueur, hauteur, False, [], couleur=couleur)
+        
         self._doors.append(door)
 
     def add_monster(self, monster: Monster):

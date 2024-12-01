@@ -24,8 +24,9 @@ level_one.add_platform(Plateforme(22, 132, 151, 5, (8, 173, 219)))
 level_one.add_cadeau(Cadeau(x=545, y=603, echelle=.8))
 level_one.add_cadeau(Cadeau(x=22, y=131, echelle=.6))
 
-level_one.set_player_spawn(54, 774)
+level_one.set_player_spawn(54, 778)
 
 level_one.add_monster(Monster(y=703, move_range_x=(458, 534), echelle=1, delta_x=1))
 
-level_one.add_door(Door.create_door_with_particles(546, 150, 30, 40, 10))
+level_one.add_door_on_player_spawn(35, 45)
+level_one.add_door(Door.create_door_with_particles(541, 150, 35, 45, 10,True) )

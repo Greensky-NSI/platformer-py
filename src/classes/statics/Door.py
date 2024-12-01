@@ -6,6 +6,7 @@ from src.utils.toolbox import safe_fill
 
 
 class Particle:
+    """x et y sont les mêmes valeurs que celles de la porte"""
     def __init__(self, x, y, longueur_porte, hauteur_porte, vitesse_particule=3):
         self.direction = (random.uniform(-1, 1), random.uniform(-1, 1))
         self.x = x + longueur_porte / 2
@@ -33,12 +34,12 @@ class Particle:
                     self.pos_porte[1] - self.h < self.y < self.pos_porte[1] + self.h))
 
 class Door:
-    def __init__(self, x, y, longueur, hauteur, exit=False, particles: list[Particle] = [], *, couleur=(0, 0, 0)):
+    def __init__(self, x, y, longueur, hauteur, is_exit=False, particles: list[Particle] = [], *, couleur=(0, 0, 0)):
         self.x = x
         self.y = y
         self.l = longueur
         self.h = hauteur
-        self.exit = exit
+        self.is_exit = is_exit
         self.particles = particles
         self.couleur = couleur
 
@@ -57,8 +58,8 @@ class Door:
                 self.particles.remove(p)
 
     @staticmethod
-    def create_door_with_particles(x, y, longueur, hauteur, nb_particules):
-        door = Door(x, y, longueur, hauteur)
+    def create_door_with_particles(x, y, longueur, hauteur, nb_particules,is_exit=False):
+        door = Door(x, y, longueur, hauteur,is_exit)
         door.particles = Particle.create_particles(nb_particules, x, y, longueur, hauteur)
         return door
 
