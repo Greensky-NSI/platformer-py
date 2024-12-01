@@ -16,3 +16,5 @@ class PlayerCache:
 
 class DOMCache:
     CHECK_FOR_GIFTS = "dom_run_gift_collisions_test"
+    GAME_START_TIME = "dom_game_start_time"
+    GAME_END_TIME = "dom_game_end_time"
