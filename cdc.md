@@ -9,15 +9,15 @@ Le projet doit être codé en [Python 3.10](https://www.python.org/downloads/rel
 ## Charges
 
 | Fonctionnalité | Implémentation | État |
-|:--:|:--:|:--:|
-| [Niveau de plateformer](#niveau) | Implémentation par Classe | ❌ |
-| [Plateforme](#plateforme) | Implémentation par une classe | ❌ |
-| [Porte](#porte) | Implémentation par une classe | ❌ |
-| [Personnage](#personnage) | Implémentation par une classe | ❌ |
-| [Liste des cadeaux](#cadeaux) | Implémentation par une pile ou une file | ❌ |
-| [Monstre](#monstres) | Implémentation par une classe | ❌ |
-| [Organisation en modules](#organisation) | Différents dossiers et fichiers dans le projet | 🚧 |
-| [Charte Graphique](./charte%20graphique.md) | Charte graphique du projet | 🚧 |
+|:--:|:--:|:----:|
+| [Niveau de plateformer](#niveau) | Implémentation par Classe |  ✅   |
+| [Plateforme](#plateforme) | Implémentation par une classe |  ✅   |
+| [Porte](#porte) | Implémentation par une classe |  ✅   |
+| [Personnage](#personnage) | Implémentation par une classe |  ✅   |
+| [Liste des cadeaux](#cadeaux) | Implémentation par une pile ou une file |  ✅   |
+| [Monstre](#monstres) | Implémentation par une classe |  ✅   |
+| [Organisation en modules](#organisation) | Différents dossiers et fichiers dans le projet |  🚧  |
+| [Charte Graphique](./charte%20graphique.md) | Charte graphique du projet |  🚧  |
 
 ### Signification des signes
 
