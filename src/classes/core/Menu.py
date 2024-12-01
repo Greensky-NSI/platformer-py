@@ -2,31 +2,35 @@
 from fichier import niveau as lvl_n
 et n le numéro de niveau
 penser à ajouter chaque niveau dans la dictionnaire niveaux tel que {'n':[lvl_n,False]} sauf pour lvl_1 avec {'1':[lvl_1,True]}"""
-from p5 import*
-#from src.levels.one import level_one as lvl_1
-from src.utils.variables import game_ticker, game_DOM
+from p5 import *
+
+from src.classes.environnement.Level import Level
+from src.utils.toolbox import safe_fill
 from src.utils.globals import env
-lvl_1='kaka'
-global niveaux
-niveaux={'1':[lvl_1,True]}
+from src.custom_types import *
+from src.classes.core.DOM import DOM
+from src.utils.niveaux import niveaux
+
 
 class Button:
-    def __init__(self,x,y,size,num_lvl,action=None):
+    def __init__(self, x, y, taille, num_lvl, action=None):
         self.x=x
         self.y=-y
-        self.s=size
+        self.s=taille
         self.a=action
         self.num=num_lvl
         self.hovered = False
 
     def draw_button(self):
-        fill(200 if self.hovered else 255)
-        rect((self.x, self.y), self.s, self.s)
+        safe_fill((200 if self.hovered else 255,) * 3)
+        rect(self.x, self.y, self.s, self.s)
         
         # Dessiner le texte
-        fill(0)
+        safe_fill((0, 0, 0))
         text_align(CENTER, CENTER)
-        text(self.num, (self.x + self.s / 2, self.y + self.s / 2))
+        text(str(self.num), self.x + self.s / 2, self.y + self.s / 2)
+
+        self.handle_mouse()
         
     def is_mouse_over(self):
         return ((self.x <= mouse_x <= self.x + self.s) and
@@ -42,29 +46,36 @@ class Button:
 
 
 class Menu:
-    def __init__(self):
-        self.buttons=[]
-        
+    _dom: DOM
+    def __init__(self, dom: DOM):
+        self.buttons = []
+        self._dom = dom
+
+        self.creer_boutons()
+
+    def set_dom(self, level: Level):
+        self._dom.reload_from_level(level)
+
     def creer_boutons(self):
         for lvl in niveaux.keys():
             if int(lvl)<=6:
-                self.buttons.append(Button(50+100*(int(lvl)-1), env.height-25, 50, lvl,lambda:game_DOM[int(lvl)-1].display()))
+                self.buttons.append(Button(50+100*(int(lvl)-1), env.height-25, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
             elif 6<int(lvl)<=12:
-                self.buttons.append(Button(50+100*(int(lvl)-7), env.height-225, 50, lvl,lambda:game_DOM[int(lvl)-1].display()))
+                self.buttons.append(Button(50+100*(int(lvl)-7), env.height-225, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
             elif 12<int(lvl)<=18:
-                self.buttons.append(Button(50+100*(int(lvl)-13), env.height-325, 50, lvl,lambda:game_DOM[int(lvl)-1].display()))
+                self.buttons.append(Button(50+100*(int(lvl)-13), env.height-325, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
             elif 18<int(lvl)<=24:
-                self.buttons.append(Button(50+100*(int(lvl)-19), env.height-425, 50, lvl,lambda:game_DOM[int(lvl)-1].display()))
+                self.buttons.append(Button(50+100*(int(lvl)-19), env.height-425, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
             elif 24<int(lvl)<=30:
-                self.buttons.append(Button(50+100*(int(lvl)-25), env.height-525, 50, lvl,lambda:game_DOM[int(lvl)-1].display()))
+                self.buttons.append(Button(50+100*(int(lvl)-25), env.height-525, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
             elif 30<int(lvl)<=36:
-                self.buttons.append(Button(50+100*(int(lvl)-31), env.height-625, 50, lvl,lambda:game_DOM[int(lvl)-1].display()))
+                self.buttons.append(Button(50+100*(int(lvl)-31), env.height-625, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
             elif 36<int(lvl)<=42:
-                self.buttons.append(Button(50+100*(int(lvl)-37), env.height-725, 50, lvl,lambda:game_DOM[int(lvl)-1].display()))
+                self.buttons.append(Button(50+100*(int(lvl)-37), env.height-725, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
 
     def display_menu(self):
-        translate(0,env.height)
+        translate(0, env.height)
         background(165)
-        self.creer_boutons()
+
         for button in self.buttons:
             button.draw_button()
