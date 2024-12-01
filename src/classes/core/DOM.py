@@ -13,6 +13,7 @@ from src.classes.statics.Cadeau import Cadeau
 from src.types.DOM import EntitiesType
 from src.types.enums import DOMCache
 from src.utils.globals import env
+from src.utils.niveaux import niveaux
 from src.utils.toolbox import hitbox_collide, safe_fill
 from src.classes.statics.Door import Door
 from src.classes.environnement.plateforme import Plateforme
@@ -26,9 +27,10 @@ class DOM:
     _cache = Cache = Cache()
     _ended = False
     _started = False
+    _current_level = 0
     spawn: tuple[int, int] = (0, 0)
 
-    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = (), doors: List[Door] = (), platforms: List[Plateforme] = (), monsters: List[Monster] = ()):
+    def __init__(self, *, ticker: Ticker = Ticker, players: List[Player] = (), gifts: List[Cadeau] = (), doors: List[Door] = (), platforms: List[Plateforme] = (), monsters: List[Monster] = (), current_level: int = 0):
         # Assertions
         assert all([x is not None and isinstance(x, Player) for x in
                     players]), "La liste des joueurs du DOM contient des éléments qui ne sont pas des joueurs"
@@ -49,6 +51,7 @@ class DOM:
         self.entities.monsters = list(monsters)
         self.ticker = ticker
         self.spawn = players[0].x, players[0].y
+        self._current_level = current_level
 
         self._cache.cache(DOMCache.GAME_START_TIME, self.current_time)
 
@@ -125,6 +128,7 @@ class DOM:
         self._ended = True
 
         self._cache.cache(DOMCache.GAME_END_TIME, self.current_time)
+        self.ticker.register(DOMCache.GAME_END_TIME)
 
     def on_end(self):
         time = self._cache.get(DOMCache.GAME_END_TIME) - self._cache.get(DOMCache.GAME_START_TIME)
@@ -148,6 +152,10 @@ class DOM:
 
     def display(self):
         if self._ended:
+            if self.ticker.diff(DOMCache.GAME_END_TIME) > 180:
+                self.set_none_level()
+                niveaux[self._current_level][1] = True
+                return
             self.on_end()
             return
 
@@ -183,19 +191,23 @@ class DOM:
         if self._cache.get(DOMCache.CHECK_FOR_GIFTS, True):
             self.check_gift_collisions()
 
-    def reload_from_level(self, level: Level):
+    def reload_from_level(self, level: Level, number: int):
+        self.spawn = level.player_spawn
+
+        for p in self.players:
+            p.teleport(*self.spawn)
+
         self.entities.gifts = level.gifts
         self.entities.doors = level.doors
         self.entities.platforms = level.platforms
         self.entities.monsters = level.monsters
+        self._current_level = number
 
         self._cache.cache(DOMCache.GAME_START_TIME, self.current_time)
-
-        self.spawn = level.player_spawn
+        self._cache.delete(DOMCache.GAME_END_TIME)
 
         self._started = True
-        for p in self.players:
-            p.teleport(*self.spawn)
+        self._ended = False
 
     def set_none_level(self):
         self._started = False

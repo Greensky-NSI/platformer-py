@@ -53,25 +53,25 @@ class Menu:
 
         self.creer_boutons()
 
-    def set_dom(self, level: Level):
-        self._dom.reload_from_level(level)
+    def set_dom(self, level: Level, number: int):
+        self._dom.reload_from_level(level, number)
 
     def creer_boutons(self):
         for lvl in niveaux.keys():
             if int(lvl)<=6:
-                self.buttons.append(Button(50+100*(int(lvl)-1), env.height-25, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
+                self.buttons.append(Button(50+100*(int(lvl)-1), env.height-25, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0], lvl)))
             elif 6<int(lvl)<=12:
-                self.buttons.append(Button(50+100*(int(lvl)-7), env.height-225, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
+                self.buttons.append(Button(50+100*(int(lvl)-7), env.height-225, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0], lvl)))
             elif 12<int(lvl)<=18:
-                self.buttons.append(Button(50+100*(int(lvl)-13), env.height-325, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
+                self.buttons.append(Button(50+100*(int(lvl)-13), env.height-325, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0], lvl)))
             elif 18<int(lvl)<=24:
-                self.buttons.append(Button(50+100*(int(lvl)-19), env.height-425, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
+                self.buttons.append(Button(50+100*(int(lvl)-19), env.height-425, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0], lvl)))
             elif 24<int(lvl)<=30:
-                self.buttons.append(Button(50+100*(int(lvl)-25), env.height-525, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
+                self.buttons.append(Button(50+100*(int(lvl)-25), env.height-525, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0], lvl)))
             elif 30<int(lvl)<=36:
-                self.buttons.append(Button(50+100*(int(lvl)-31), env.height-625, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
+                self.buttons.append(Button(50+100*(int(lvl)-31), env.height-625, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0], lvl)))
             elif 36<int(lvl)<=42:
-                self.buttons.append(Button(50+100*(int(lvl)-37), env.height-725, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0])))
+                self.buttons.append(Button(50+100*(int(lvl)-37), env.height-725, 50, int(lvl), lambda: self.set_dom(niveaux[lvl][0], lvl)))
 
     def display_menu(self):
         translate(0, env.height)
