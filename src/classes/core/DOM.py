@@ -157,8 +157,10 @@ class DOM:
         self.display_time()
 
         self.check_collision_with_monsters()
-        if self.collected_all_gifts:
-            for door in self.entities.doors:
+        for door in self.entities.doors:
+            if self.collected_all_gifts and door.is_exit:
+                door.display()
+            elif not door.is_exit:
                 door.display()
 
             self.check_for_doors()

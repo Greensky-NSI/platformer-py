@@ -5,21 +5,25 @@ from src.custom_types import *
 from src.utils.globals import env, player_variables
 from src.utils.variables import game_ticker, game_DOM, player
 
+from src.classes.core.Menu import Menu
+
+global menu
+menu=Menu()
 
 def setup():
     size(env.width, env.height)
     game_ticker.register("game_start")
 
 
-game_DOM.add_player_in_dom(player)
+    for i in range(len(game_DOM)):
+        game_DOM[i].add_player_in_dom(player)
 
 
 def draw():
     game_ticker.tick()
-    decoration()
 
-    game_DOM.display()
-    game_DOM.tick()
+    menu.display_menu()
+        
 
     if key_is_pressed:
         pressed = str(key).lower()
